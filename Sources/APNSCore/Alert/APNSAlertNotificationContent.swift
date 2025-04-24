@@ -53,6 +53,7 @@ public struct APNSAlertNotificationContent: Encodable, Sendable {
         case title
         case subtitle
         case body
+        case sound
         case launchImage = "launch-image"
         case titleLocalizationKey = "title-loc-key"
         case titleLocalizationArguments = "title-loc-args"
@@ -68,9 +69,12 @@ public struct APNSAlertNotificationContent: Encodable, Sendable {
 
     /// Additional information that explains the purpose of the notification.
     public var subtitle: StringValue?
-
+    
     /// The content of the alert message.
     public var body: StringValue?
+    
+    /// The content of the alert message.
+    public var sound: StringValue?
 
     /// The name of the launch image file to display. If the user chooses to launch your app,
     /// the contents of the specified image or storyboard file are displayed instead of your app’s normal launch image.
@@ -87,11 +91,13 @@ public struct APNSAlertNotificationContent: Encodable, Sendable {
         title: APNSAlertNotificationContent.StringValue? = nil,
         subtitle: APNSAlertNotificationContent.StringValue? = nil,
         body: APNSAlertNotificationContent.StringValue? = nil,
+        sound: APNSAlertNotificationContent.StringValue? = nil,
         launchImage: String? = nil
     ) {
         self.title = title
         self.subtitle = subtitle
         self.body = body
+        self.sound = sound
         self.launchImage = launchImage
     }
 
@@ -116,6 +122,13 @@ public struct APNSAlertNotificationContent: Encodable, Sendable {
             value: self.body,
             into: &container,
             rawKey: .body,
+            localizedKey: .bodyLocalizationKey,
+            localizedArgumentsKey: .bodyLocalizationArguments
+        )
+        try self.encode(
+            value: self.sound,
+            into: &container,
+            rawKey: .sound,
             localizedKey: .bodyLocalizationKey,
             localizedArgumentsKey: .bodyLocalizationArguments
         )
